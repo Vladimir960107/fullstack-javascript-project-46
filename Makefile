@@ -1,0 +1,2 @@
+help: 
+	./gendiff.js -h
