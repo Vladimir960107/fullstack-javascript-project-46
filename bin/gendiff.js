@@ -3,12 +3,12 @@
 import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
-import parseFile from './src/parsing.js';
+import parseFile from '../src/parsing.js';
 
 const program = new Command();
 
-const defaultPath1 = path.join('.', 'data', 'file1.json');
-const defaultPath2 = path.join('.', 'data', 'file2.json');
+const defaultPath1 = path.join('..', 'data', 'file1.json');
+const defaultPath2 = path.join('..', 'data', 'file2.json');
 
 program
   .description('Compares two configuration files and shows a difference.')
@@ -38,4 +38,6 @@ program
   });
 
 program.parse(process.argv);
+
+
 
