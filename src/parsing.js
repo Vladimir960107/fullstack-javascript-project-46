@@ -5,10 +5,11 @@ const parseFile = (filepath) => {
   try {
     const ext = path.extname(filepath);
     let obj = {};
+    let data = null; //Может убрать это?
     switch (ext)
     {
       case '.json':
-        const data = fs.readFileSync(filepath, 'utf8');
+        data = fs.readFileSync(filepath, 'utf8'); //Как лучше переписать это?
         obj = JSON.parse(data);
         return obj;
       case '.yaml':
