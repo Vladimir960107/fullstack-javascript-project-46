@@ -1,8 +1,7 @@
 import path from 'path';
-import { __dirname } from './dirname.js';
 import gendiff from '../bin/gendiff.js';
 
-const dir = __dirname(import.meta.url); 
+const dir = import.meta.url; 
 
 describe('gendiff', () => {
     test('should correctly detect no differences', () => {
