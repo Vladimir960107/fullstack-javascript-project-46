@@ -1,11 +1,15 @@
 import fs from 'fs';
-import parseFile from 'parsing.js';
+import parseFile from './parsing.js';
 import _ from 'lodash'; 
 
-const compare = (filepath1, filepath2, options) => {
+const compare = (filepath1, filepath2, options = {}) => {
     console.log(`Comparing ${filepath1} and ${filepath2}`);
+
+    // Initialize variables to hold file contents
     let obj1 = null;
     let obj2 = null;
+
+    // Check existence and parse files
     if (fs.existsSync(filepath1)) {
       console.log('The filepath1 exists.');
       obj1 = parseFile(filepath1);
@@ -19,9 +23,14 @@ const compare = (filepath1, filepath2, options) => {
       console.log('The filepath2 does not exist.');
     }
 
+    // Initialize a variable for differences string
+    let diff = '';
+
+    // Compare the files if both are successfully loaded
     if (!_.isNull(obj1) && !_.isNull(obj2)) {
         const keysUnion = _.union(_.keys(obj1), _.keys(obj2)).sort();
-        let diff = keysUnion.map(key => {
+
+        diff = keysUnion.map(key => {
           if (!_.has(obj2, key)) {
             return `- ${key}: ${obj1[key]}`;
           } else if (!_.has(obj1, key)) {
@@ -34,12 +43,17 @@ const compare = (filepath1, filepath2, options) => {
         }).join('\n');
       
         console.log(diff);
-    }
-    else {
+    } else {
         console.log('Cannot compare files.');
+        return; // Early return to avoid processing further in case of errors
     }
+    
+    // Safely access and log the format option, defaulting to 'default'
+    const format = options.format || 'default';
+    console.log(`Format: ${format}`);
 
-    console.log(`Format: ${options.format || 'default'}`);
+    // Optionally, return the diff if you intend to use the result programmatically
+    return diff;
 };
 
 export default compare;
